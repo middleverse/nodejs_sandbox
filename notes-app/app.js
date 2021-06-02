@@ -5,12 +5,29 @@ const getNotes = require('./notes')
 // customize yargs version
 yargs.version('1.1.0')
 
+
+// yargs.command DEFINES a new command 
+// lets use it to build some commands
+
 // Create add command
 yargs.command({
     command: 'add',
     describe: 'Add a new note',
-    handler: () => {
-        console.log('Adding a new note')
+    builder: {
+        title: {
+            describe: 'Note title',
+            demandOption: true,
+            type: 'string'
+        },
+        body: {
+            describe: 'Note body',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: (argv) => {
+        console.log('Title: ' + argv.title)
+        console.log('Body: ' + argv.body)
     }
 })
 
@@ -18,9 +35,9 @@ yargs.command({
 yargs.command({
     command: 'remove',
     describe: 'Remove a note',
-    handler: () => {
-        if (!yargs.argv.note) return console.log('Provide name of note to remove.') 
-        console.log('Removing note', yargs.argv.note)
+    handler: (argv) => {
+        if (!argv.note) return console.log('Provide name of note to remove.') 
+        console.log('Removing note', argv.note)
     }
 })
 
@@ -42,4 +59,4 @@ yargs.command({
     }
 })
 
-console.log(yargs.argv)
+yargs.parse() // parses the yargs command with all the arguments
