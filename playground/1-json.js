@@ -9,7 +9,14 @@ const fs = require("fs");
 // const book_json = JSON.stringify(book);
 // fs.writeFileSync("1-json.json", book_json);
 
-// @todo we call this buffer because what comes back
+// @note we call this buffer because what comes back
 // from readFileSync is not a string but a binary buffer
 const data_buffer = fs.readFileSync("1-json.json");
-console.log(data_buffer);
+const data_json = data_buffer.toString(); // binary buffer to string
+const data = JSON.parse(data_json);
+console.log(data);
+
+data.title = "Audacity of Hope";
+data.author = "Barack Obama";
+
+fs.writeFileSync("1-json.json", JSON.stringify(data));
