@@ -1,6 +1,10 @@
 const fs = require("fs");
 
-const getNotes = () => "Your Notes Are..";
+const getNotes = () => {
+  const notes = loadNotes();
+
+  console.log(notes);
+};
 
 const addNote = (title, body) => {
   const notes = loadNotes();
@@ -18,6 +22,20 @@ const addNote = (title, body) => {
 
     saveNotes(notes);
   }
+};
+
+const removeNote = (title) => {
+  const notes = loadNotes();
+
+  console.log("Removing:", title);
+
+  const removedNotes = notes.filter((note) => {
+    return note.title !== title;
+  });
+
+  saveNotes(removedNotes);
+
+  console.log(removedNotes);
 };
 
 const loadNotes = () => {
@@ -39,4 +57,5 @@ const saveNotes = (notes) => {
 module.exports = {
   getNotes,
   addNote,
+  removeNote,
 };
